@@ -16,7 +16,7 @@ func MenuInsertDokter(dataDokter *entities.Dokter) {
 	var Tlp string
 	var jamKerja string
 	var spesialis string
-	fmt.Print("masukkan nip: ")
+	fmt.Print("masukkan ID: ")
 	fmt.Scan(&id)
 	scanner.Scan()
 	fmt.Print("masukkan nama: ")
@@ -67,7 +67,7 @@ func MenuUpdateDokter(dataDokter *entities.Dokter) {
 		scanner.Scan()
 		controllers.UpdateDataDokter(isEmpty, nama, Tlp, jamKerja, spesialis)
 	} else {
-		fmt.Printf("data dengan nip %d  tidak ada\n", ID)
+		fmt.Printf("data dengan ID %d  tidak ada\n", ID)
 	}
 }
 

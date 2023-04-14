@@ -20,6 +20,7 @@ func GetListDataDokter(g *entities.Dokter, header []string) string {
 	}
 	return table
 }
+
 func Search(g *entities.Dokter, ID int) *entities.Dokter {
 	return doktermodel.Search(g, ID)
 }
