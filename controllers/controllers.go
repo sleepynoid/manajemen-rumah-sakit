@@ -16,7 +16,7 @@ func InsertDataDokter(g *entities.Dokter, id int, nama, Tlp, jamKerja, spesialis
 func GetListDataDokter(g *entities.Dokter, header []string) string {
 	table := doktermodel.GetListDataDokter(g, header)
 	if table == " " {
-		return "DATA KOSONG"
+		return "\nDATA KOSONG\n"
 	}
 	return table
 }
