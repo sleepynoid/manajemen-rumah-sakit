@@ -53,13 +53,15 @@ func GetListDataDokter(dataDokter *entities.Dokter, header []string) string {
 }
 
 func Search(g *entities.Dokter, ID int) *entities.Dokter {
-	for g != nil {
-		if g.ID == ID {
-			return g
+	temp := g
+	var found *entities.Dokter = nil
+	for temp != nil {
+		if ID == temp.ID {
+			found = temp
 		}
-		g = g.Next
+		temp = temp.Next
 	}
-	return nil
+	return found
 }
 
 func Update(g *entities.Dokter, nama, Tlp, jamKerja, spesialis string) {

@@ -48,7 +48,7 @@ func MenuUpdateDokter(dataDokter *entities.Dokter) {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Scan(&ID)
 	scanner.Scan()
-	if empty := controllers.Search(dataDokter, ID); empty != nil {
+	if isEmpty := controllers.Search(dataDokter, ID); isEmpty != nil {
 		var nama string
 		var Tlp string
 		var jamKerja string
@@ -65,7 +65,7 @@ func MenuUpdateDokter(dataDokter *entities.Dokter) {
 		fmt.Println("masukan spesialis baru : ")
 		fmt.Scan(&spesialis)
 		scanner.Scan()
-		controllers.UpdateDataDokter(empty, nama, Tlp, jamKerja, spesialis)
+		controllers.UpdateDataDokter(isEmpty, nama, Tlp, jamKerja, spesialis)
 	} else {
 		fmt.Printf("data dengan nip %d  tidak ada\n", ID)
 	}
