@@ -6,6 +6,7 @@ import (
 	"strings"
 	"tugas-uts/entities"
 	"tugas-uts/model/doktermodel"
+	pasien "tugas-uts/model/pasienmodel"
 )
 
 // fungsi insert data dokter
@@ -77,4 +78,44 @@ func IsValidJamKerja(jamKerja string) bool {
 	regex := `^\d{2}:\d{2}-\d{2}:\d{2}$`
 	match, _ := regexp.MatchString(regex, jamKerja)
 	return match
+}
+
+type PasienController struct {
+	PasienList *pasien.NodePasien
+}
+
+func (pc *PasienController) SearchPasien(ID int) *entities.Pasien {
+	return pc.PasienList.SearchPasien(ID)
+}
+
+func (pc *PasienController) TambahPasien(input entities.Pasien) {
+	temp := &entities.Pasien{
+		ID:      input.ID,
+		Nama:    input.Nama,
+		Tlp:     input.Tlp,
+		Kondisi: input.Kondisi,
+		Riwayat: input.Riwayat,
+		Next:    nil,
+	}
+	pc.PasienList.InsertPasien(temp)
+}
+
+func (pc *PasienController) DeletePasien(ID int) bool {
+	return pc.PasienList.DeletePasien(ID)
+}
+
+func (pc *PasienController) UpdatePasien(ID int, input entities.Pasien) bool {
+	update := &entities.Pasien{
+		ID:      input.ID,
+		Nama:    input.Nama,
+		Tlp:     input.Tlp,
+		Kondisi: input.Kondisi,
+		Riwayat: input.Riwayat,
+		Next:    nil,
+	}
+	return pc.PasienList.UpdatePasien(ID, update)
+}
+
+func (pc *PasienController) ListPasien() {
+	pc.PasienList.ListPasien()
 }
