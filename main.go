@@ -24,7 +24,7 @@ func main() {
 	// dataSuster := entities.Suster{}
 	var menuUtama int = 0
 
-	for menuUtama != 3 { // jika pilihan menuUtama == 3 maka keluar dari program
+	for menuUtama != 3 { 
 		clear()
 		views.MenuUtama()
 		fmt.Scan(&menuUtama)
@@ -34,9 +34,10 @@ func main() {
 		case 1:
 			var input int = 0
 			clear()
-			for input != 6 { // jika pilihan input == 6 maka kembali ke menu utama
+			for input != 6 { 
 				views.SubMenu()
 				fmt.Scan(&input)
+				scanner.Scan()
 
 				switch input {
 				case 1:
@@ -48,7 +49,7 @@ func main() {
 				case 4:
 					dokterview.MenuViewAll(&dataDokter)
 				case 5:
-					// dokterview.MenuViewByNip(&dataDokter)
+					// dokterview.MenuViewById(&dataDokter)
 				default:
 					if input == 6 {
 						continue

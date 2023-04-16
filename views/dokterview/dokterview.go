@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"tugas-uts/controllers"
 	"tugas-uts/entities"
 )
@@ -16,20 +17,66 @@ func MenuInsertDokter(dataDokter *entities.Dokter) {
 	var Tlp string
 	var jamKerja string
 	var spesialis string
-	fmt.Print("masukkan ID: ")
-	fmt.Scan(&id)
-	scanner.Scan()
-	fmt.Print("masukkan nama: ")
-	scanner.Scan()
-	nama = scanner.Text()
-	fmt.Print("masukan No. Telpon: ")
-	fmt.Scan(&Tlp)
-	fmt.Print("masukan Jam Kerja (contoh: 07:00-16:00): ")
-	fmt.Scan(&jamKerja)
-	scanner.Scan()
-	fmt.Print("masukan Spesialis: ")
-	fmt.Scan(&spesialis)
-	scanner.Scan()
+
+	// Validasi untuk input ID
+	for {
+		fmt.Print("Masukkan ID: ")
+		scanner.Scan()
+		idInput := scanner.Text()
+		if !controllers.IsValidID(idInput) {
+			fmt.Println("ID harus berupa angka positif.")
+			continue
+		}
+		id, _ = strconv.Atoi(idInput)
+		break
+	}
+
+	// Validasi untuk input Nama
+	for {
+		fmt.Print("Masukkan Nama: ")
+		scanner.Scan()
+		nama = scanner.Text()
+		if !controllers.IsName(nama) {
+			fmt.Println("Nama tidak valid.")
+			continue
+		}
+		break
+	}
+
+	// Validasi unutuk input spesialis
+	for {
+		fmt.Print("Masukkan Spesialis: ")
+		scanner.Scan()
+		spesialis = scanner.Text()
+		if !controllers.IsName(spesialis) {
+			fmt.Println("Inputan tidak valid.")
+			continue
+		}
+		break
+	}
+
+	// Validasi untuk input Telepon
+	for {
+		fmt.Print("Masukkan No. Telpon: ")
+		scanner.Scan()
+		Tlp = scanner.Text()
+		if !controllers.IsValidTlp(Tlp) {
+			fmt.Println("No. Telpon tidak valid.")
+			continue
+		}
+		break
+	}
+	// Validasi untuk input Jam Kerja
+	for {
+		fmt.Print("Masukkan Jam Kerja (contoh: 07:00-16:00): ")
+		scanner.Scan()
+		jamKerja = scanner.Text()
+		if !controllers.IsValidJamKerja(jamKerja) {
+			fmt.Println("Jam Kerja tidak valid.")
+			continue
+		}
+		break
+	}
 
 	controllers.InsertDataDokter(dataDokter, id, nama, Tlp, jamKerja, spesialis)
 }
