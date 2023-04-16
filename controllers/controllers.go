@@ -9,33 +9,43 @@ import (
 )
 
 // fungsi insert data dokter
-func InsertDataDokter(g *entities.Dokter, id int, nama, Tlp, jamKerja, spesialis string) {
-	// mengubah inputan spesialis dana nama dari user menjadi huruf kapital semua
+func InsertDokter(dataDokter *entities.Dokter, id int, nama, Tlp, jamKerja, spesialis string) {
+	// Mengubah spesialis dan nama menjadi huruf besar
 	spesialis = strings.ToUpper(spesialis)
 	nama = strings.ToUpper(nama)
 	// memanggil fungsi InsertDataDokter di model
-	doktermodel.InsertDataDokter(g, id, nama, Tlp, jamKerja, spesialis)
+	doktermodel.InsertDokter(dataDokter, id, nama, Tlp, jamKerja, spesialis)
 }
 
-// Fungsi menampilkan data
-func GetListDataDokter(g *entities.Dokter, header []string) string {
-	table := doktermodel.GetListDataDokter(g, header)
+// Fungsi search data by Id
+func Search(dataDokter *entities.Dokter, ID int) *entities.Dokter {
+	return doktermodel.Search(dataDokter, ID)
+}
+
+// Fungsi Update Data
+func UpdateDataDokter(dataDokter *entities.Dokter, nama, Tlp, jamKerja, spesialis string) {
+	// Mengubah spesialis dan nama menjadi huruf besar
+	spesialis = strings.ToUpper(spesialis)
+	nama = strings.ToUpper(nama)
+	// Memanggil fungsi Update di doktermodel dengan parameter yang diberikan
+	doktermodel.Update(dataDokter, nama, Tlp, jamKerja, spesialis)
+}
+
+func DeleteDataDokter(dataDokter *entities.Dokter, ID int) {
+	doktermodel.Delete(dataDokter, ID)
+}
+
+// Fungsi GetListDokter mengambil daftar dokter dari database dan mengembalikan string berupa tabel
+func GetListDokter(dataDokter *entities.Dokter, header []string) string {
+	table := doktermodel.GetListDokter(dataDokter, header)
 	if table == " " {
 		return "\nDATA KOSONG\n"
 	}
 	return table
 }
 
-// Fungsi search data by Id
-func Search(g *entities.Dokter, ID int) *entities.Dokter {
-	return doktermodel.Search(g, ID)
-}
-
-// Fungsi Update Data
-func UpdateDataDokter(g *entities.Dokter, nama, Tlp, jamKerja, spesialis string) {
-	spesialis = strings.ToUpper(spesialis)
-	nama = strings.ToUpper(nama)
-	doktermodel.Update(g, nama, Tlp, jamKerja, spesialis)
+func GetListDokterById(dataDokter *entities.Dokter, header []string) string {
+	return doktermodel.GetListDokterById(dataDokter, header)
 }
 
 func IsName(input string) bool {
@@ -44,7 +54,7 @@ func IsName(input string) bool {
 		return false
 	}
 	// Nama tidak boleh mengandung angka atau karakter khusus
-	regex := `^[a-zA-Z\s]+$`
+	regex := `^[a-zA-Z\s]+$` //`^` merepresentasikan awal dari string. `$` merepresentasikan akhir dari string.
 	match, _ := regexp.MatchString(regex, input)
 	return match
 }
@@ -68,39 +78,3 @@ func IsValidJamKerja(jamKerja string) bool {
 	match, _ := regexp.MatchString(regex, jamKerja)
 	return match
 }
-
-/*
-
-func DeleteDataDokter(g *entities.Dokter {
-	doktermodel.Delete(g,
-}
-
-func GetlistDataDokterByNip(g *entities.Dokter {
-	doktermodel.GetListByNip(g,
-}
-
-// fungsi dokter end
-
-// fungsi mahasiswa
-func InsertDataMahasiswa(g *entities.GerbongMhs, data entities.Mahasiswa) {
-	mahasiswa.InsertDataMahasiswa(g, data)
-}
-
-func UpdateDataMahasiswa(g *entities.GerbongMhs, npm string) {
-	mahasiswa.Update(g, npm)
-}
-
-func DeleteDataMahasiswa(g *entities.GerbongMhs, npm string) {
-	mahasiswa.Delete(g, npm)
-}
-
-func GetListDataMahasiswa(g *entities.GerbongMhs) {
-	mahasiswa.GetListMahasiswa(g)
-}
-
-func GetlistDatMahasiswaByNpm(g *entities.GerbongMhs, npm string) {
-	mahasiswa.GetlistMahasiswaByNpm(g, npm)
-}
-
-//fungsi mahasiswa end
-*/

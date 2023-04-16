@@ -24,7 +24,7 @@ func main() {
 	// dataSuster := entities.Suster{}
 	var menuUtama int = 0
 
-	for menuUtama != 3 { 
+	for menuUtama != 4 {
 		clear()
 		views.MenuUtama()
 		fmt.Scan(&menuUtama)
@@ -34,22 +34,22 @@ func main() {
 		case 1:
 			var input int = 0
 			clear()
-			for input != 6 { 
+			for input != 6 {
 				views.SubMenu()
 				fmt.Scan(&input)
 				scanner.Scan()
 
 				switch input {
 				case 1:
-					dokterview.MenuInsertDokter(&dataDokter)
+					dokterview.MenuInsertDataDokter(&dataDokter)
 				case 2:
 					dokterview.MenuUpdateDokter(&dataDokter)
 				case 3:
-					// dokterview.MenuDeleteDosen(&dataDokter)
+					dokterview.MenuDeleteDokter(&dataDokter)
 				case 4:
 					dokterview.MenuViewAll(&dataDokter)
 				case 5:
-					// dokterview.MenuViewById(&dataDokter)
+					dokterview.MenuViewById(&dataDokter)
 				default:
 					if input == 6 {
 						continue
@@ -58,6 +58,31 @@ func main() {
 				}
 			}
 		case 2:
+			var input int
+			for input != 6 {
+				views.SubMenu()
+				fmt.Scan(&input)
+				scanner.Scan()
+
+				switch input {
+				case 1:
+					// mhsview.MenuInsertSstr(&dataSuster)
+				case 2:
+					// mhsview.MenuUpdatetSstr(&dataSuster)
+				case 3:
+					// mhsview.MenuDeletetSstr(&dataSuster)
+				case 4:
+					// mhsview.MenuViewAllSstr(&dataSuster)
+				case 5:
+					// mhsview.MenuViewByNpmSstr(&dataSuster)
+				default:
+					if input == 6 {
+						continue
+					}
+					fmt.Println("pilihan tidak valid")
+				}
+			}
+		case 3:
 			var input int
 			for input != 6 {
 				views.SubMenu()
