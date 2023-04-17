@@ -9,12 +9,12 @@ import (
 )
 
 // fungsi insert data dokter
-func InsertDokter(dataDokter *entities.Dokter, id int, nama, Tlp, jamKerja, spesialis string) {
+func InsertDataDokter(d *entities.Dokter, id int, nama, Tlp, jamKerja, spesialis string) {
 	// Mengubah spesialis dan nama menjadi huruf besar
 	spesialis = strings.ToUpper(spesialis)
 	nama = strings.ToUpper(nama)
 	// memanggil fungsi InsertDataDokter di model
-	doktermodel.InsertDokter(dataDokter, id, nama, Tlp, jamKerja, spesialis)
+	doktermodel.InsertDokter(d, id, nama, Tlp, jamKerja, spesialis)
 }
 
 // Fungsi search data by Id
