@@ -3,30 +3,26 @@ package doktermodel
 import (
 	"bytes"
 	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"os"
 	"tugas-uts/entities"
-
-	"github.com/olekukonko/tablewriter"
 )
 
-func InsertDokter(dataDokter *entities.Dokter, id int, nama string, Tlp string, jamKerja string, spesialis string) {
+type NodeDokter struct {
+	head *entities.Dokter
+	tail *entities.Dokter
+}
 
-	newDokter := entities.Dokter{
-		ID:        id,
-		Nama:      nama,
-		Tlp:       Tlp,
-		JamKerja:  jamKerja,
-		Spesialis: spesialis,
-	}
-
-	temp := dataDokter
-	if temp.Next == nil {
-		temp.Next = &newDokter
+func (dk *NodeDokter) InsertDokter(dokter *entities.Dokter) {
+	if dk.head == nil {
+		fmt.Println("first")
+		dk.head = dokter
+		dk.tail = dokter
 	} else {
-		for temp.Next != nil {
-			temp = temp.Next
-		}
-		temp.Next = &newDokter
+		fmt.Println("NOTfirst")
+		dk.tail.Next = dokter
+		dk.tail = dokter
+		fmt.Println(dk.head.ID, dk.head.Next.ID)
 	}
 }
 
@@ -82,28 +78,42 @@ func Search(dataDokter *entities.Dokter, ID int) *entities.Dokter {
 	return found
 }
 
-func Update(dataDokter *entities.Dokter, nama, Tlp, jamKerja, spesialis string) {
-	temp := dataDokter
-	temp.Nama = nama
-	temp.Tlp = Tlp
-	temp.JamKerja = jamKerja
-	temp.Spesialis = spesialis
+func (dl *NodeDokter) Update(update *entities.Dokter, target int) bool {
+	current := dl.head
+	for current != nil {
+		if current.ID == target {
+			current.Nama = update.Nama
+			current.Tlp = update.Tlp
+			current.JamKerja = update.JamKerja
+			current.Spesialis = update.Spesialis
+			return true
+		}
+	}
+	return false
 }
 
-func Delete(dataDokter *entities.Dokter, ID int) {
-	temp := dataDokter
-
-	// mengecek apakah data yang di hapus data pertama
-	if temp.ID == ID {
-		temp = temp.Next
-		return
+func (dl *NodeDokter) Delete(dataDokter *entities.Dokter, target int) bool {
+	if dl.head == nil {
+		fmt.Println("1")
+		return false
 	}
-
+	if dl.head.ID == target {
+		fmt.Println("2")
+		fmt.Println(dl.head.ID)
+		dl.head = dl.head.Next
+		fmt.Println(dl.head.ID)
+		return true
+	}
+	fmt.Println("3")
+	temp := dl.head
 	for temp.Next != nil {
-		if temp.Next.ID == ID {
+		fmt.Println("loop")
+		if temp.Next.ID == target {
+			fmt.Println("found")
 			temp.Next = temp.Next.Next
-			return
+			return true
 		}
 		temp = temp.Next
 	}
+	return false
 }

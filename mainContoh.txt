@@ -1,0 +1,14 @@
+package main
+
+import (
+	"tugas-uts/controllers"
+)
+
+func main() {
+	var tester controllers.PasienController
+	tester.TambahPasien(10, "rizal", "102121", "121", "sasada")
+  tester.TambahPasien(11, "tasya", "102121", "121", "sasada")
+  tester.TambahPasien(12, "halim", "102121", "121", "sasada")
+  tester.DeletePasien(121)
+  tester.ListPasien()
+}
