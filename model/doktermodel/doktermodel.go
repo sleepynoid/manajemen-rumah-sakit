@@ -3,10 +3,9 @@ package doktermodel
 import (
 	"bytes"
 	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"os"
 	"tugas-uts/entities"
-
-	"github.com/olekukonko/tablewriter"
 )
 
 type NodeDokter struct {
@@ -15,7 +14,7 @@ type NodeDokter struct {
 }
 
 func (dk *NodeDokter) InsertDokter(dokter *entities.Dokter) {
-  if dk.head == nil {
+	if dk.head == nil {
 		fmt.Println("first")
 		dk.head = dokter
 		dk.tail = dokter
@@ -79,22 +78,22 @@ func Search(dataDokter *entities.Dokter, ID int) *entities.Dokter {
 	return found
 }
 
-func Update(update *entities.Dokter, target int) bool {
-	current := pl.head
+func (dl *NodeDokter) Update(update *entities.Dokter, target int) bool {
+	current := dl.head
 	for current != nil {
 		if current.ID == target {
 			current.Nama = update.Nama
 			current.Tlp = update.Tlp
-			current.Kondisi = update.JamKerja
-			current.Riwayat = update.Spesialis
+			current.JamKerja = update.JamKerja
+			current.Spesialis = update.Spesialis
 			return true
 		}
 	}
-  return false
+	return false
 }
 
 func (dl *NodeDokter) Delete(dataDokter *entities.Dokter, target int) bool {
-  if dl.head == nil {
+	if dl.head == nil {
 		fmt.Println("1")
 		return false
 	}
