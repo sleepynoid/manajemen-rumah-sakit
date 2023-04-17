@@ -5,40 +5,50 @@ import (
 	"strconv"
 	"strings"
 	"tugas-uts/entities"
-	"tugas-uts/model/doktermodel"
+	dokter "tugas-uts/model/doktermodel"
 	pasien "tugas-uts/model/pasienmodel"
 )
 
+type DokterController struct {
+	DokterList *dokter.NodeDokter
+}
+
 // fungsi insert data dokter
-func InsertDokter(dataDokter *entities.Dokter, id int, nama, Tlp, jamKerja, spesialis string) {
-	// Mengubah spesialis dan nama menjadi huruf besar
-	spesialis = strings.ToUpper(spesialis)
-	nama = strings.ToUpper(nama)
-	// memanggil fungsi InsertDataDokter di model
-	doktermodel.InsertDokter(dataDokter, id, nama, Tlp, jamKerja, spesialis)
+func (dl *DokterController) InsertDokter(input *entities.Dokter) {
+	temp := &entities.Dokter{
+		ID:        input.ID,
+		Nama:      input.Nama,
+		Tlp:       input.Tlp,
+		JamKerja:  input.JamKerja,
+		Spesialis: input.Spesialis,
+		Next:      nil,
+	}
+	dl.DokterList.InsertDokter(temp)
 }
 
 // Fungsi search data by Id
-func Search(dataDokter *entities.Dokter, ID int) *entities.Dokter {
-	return doktermodel.Search(dataDokter, ID)
+func (dl *DokterController) Search(dataDokter *entities.Dokter, ID int) *entities.Dokter {
+	return dokter.Search(dataDokter, ID)
 }
 
 // Fungsi Update Data
-func UpdateDataDokter(dataDokter *entities.Dokter, nama, Tlp, jamKerja, spesialis string) {
-	// Mengubah spesialis dan nama menjadi huruf besar
-	spesialis = strings.ToUpper(spesialis)
-	nama = strings.ToUpper(nama)
-	// Memanggil fungsi Update di doktermodel dengan parameter yang diberikan
-	doktermodel.Update(dataDokter, nama, Tlp, jamKerja, spesialis)
+func (dl *DokterController) UpdateDataDokter(dataDokter *entities.Dokter, ID int, nama, Tlp, jamKerja, spesialis string) {
+	temp := entities.Dokter{
+		Nama:      nama,
+		Tlp:       Tlp,
+		JamKerja:  jamKerja,
+		Spesialis: spesialis,
+	}
+	dl.DokterList.Update(&temp, ID)
 }
 
-func DeleteDataDokter(dataDokter *entities.Dokter, ID int) {
-	doktermodel.Delete(dataDokter, ID)
+func (dl *DokterController) DeleteDataDokter(dataDokter *entities.Dokter, ID int) {
+	dl.DokterList.Delete(dataDokter, ID)
 }
 
 // Fungsi GetListDokter mengambil daftar dokter dari database dan mengembalikan string berupa tabel
 func GetListDokter(dataDokter *entities.Dokter, header []string) string {
-	table := doktermodel.GetListDokter(dataDokter, header)
+	table := dokter.GetListDokter(dataDokter, header)
 	if table == " " {
 		return "\nDATA KOSONG\n"
 	}
@@ -46,7 +56,7 @@ func GetListDokter(dataDokter *entities.Dokter, header []string) string {
 }
 
 func GetListDokterById(dataDokter *entities.Dokter, header []string) string {
-	return doktermodel.GetListDokterById(dataDokter, header)
+	return dokter.GetListDokterById(dataDokter, header)
 }
 
 func IsName(input string) bool {
@@ -81,21 +91,23 @@ func IsValidJamKerja(jamKerja string) bool {
 }
 
 type PasienController struct {
-	PasienList *pasien.NodePasien
+	PasienList pasien.NodePasien
 }
 
 func (pc *PasienController) SearchPasien(ID int) *entities.Pasien {
 	return pc.PasienList.SearchPasien(ID)
 }
 
-func (pc *PasienController) TambahPasien(input entities.Pasien) {
+func (pc *PasienController) TambahPasien(ID int, Nama string, Tlp string, Tgl string, pnykt string) {
+	riwayat := entities.Medis{
+		Tanggal: Tgl,
+		Peyakit: pnykt,
+	}
 	temp := &entities.Pasien{
-		ID:      input.ID,
-		Nama:    input.Nama,
-		Tlp:     input.Tlp,
-		Kondisi: input.Kondisi,
-		Riwayat: input.Riwayat,
-		Next:    nil,
+		ID:      ID,
+		Nama:    Nama,
+		Tlp:     Tlp,
+		Riwayat: riwayat,
 	}
 	pc.PasienList.InsertPasien(temp)
 }
