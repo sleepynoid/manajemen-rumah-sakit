@@ -75,7 +75,7 @@ func MenuInsertDataDokter(dataDokter *entities.Dokter) {
 		break
 	}
 
-	controllers.InsertDokter(dataDokter, id, nama, Tlp, jamKerja, spesialis)
+	dataDokter.InsertDataDokter(id, nama, Tlp, jamKerja, spesialis)
 	fmt.Println("Data berhasil di tambahkan")
 }
 

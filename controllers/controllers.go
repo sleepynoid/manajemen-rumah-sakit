@@ -14,6 +14,7 @@ type DokterController struct {
 }
 
 // fungsi insert data dokter
+
 func (dl *DokterController) InsertDokter(input *entities.Dokter) {
 	temp := &entities.Dokter{
 		ID:        input.ID,
@@ -24,6 +25,7 @@ func (dl *DokterController) InsertDokter(input *entities.Dokter) {
 		Next:      nil,
 	}
 	dl.DokterList.InsertDokter(temp)
+
 }
 
 // Fungsi search data by Id
@@ -116,13 +118,16 @@ func (pc *PasienController) DeletePasien(ID int) bool {
 	return pc.PasienList.DeletePasien(ID)
 }
 
-func (pc *PasienController) UpdatePasien(ID int, input entities.Pasien) bool {
+func (pc *PasienController) UpdatePasien(ID int, Nama string, Tlp string, Tgl string, pnykt string) bool {
+	riwayat := entities.Medis{
+		Tanggal: Tgl,
+		Peyakit: pnykt,
+	}
 	update := &entities.Pasien{
-		ID:      input.ID,
-		Nama:    input.Nama,
-		Tlp:     input.Tlp,
-		Kondisi: input.Kondisi,
-		Riwayat: input.Riwayat,
+		ID:      ID,
+		Nama:    Nama,
+		Tlp:     Tlp,
+		Riwayat: riwayat,
 		Next:    nil,
 	}
 	return pc.PasienList.UpdatePasien(ID, update)
